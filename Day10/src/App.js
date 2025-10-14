@@ -11,7 +11,7 @@ function App() {
       
       setTimeout(() => {
         setStatus('Order ready! 🍽️ Enjoy your meal!');
-      }, 300);
+      }, 3000);
 
     }, 2000);
   };

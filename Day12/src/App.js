@@ -26,14 +26,18 @@ function App() {
       <h1>🐞 React Bug Tracker</h1>
       <button onClick={addBug}>Add Bug 🐛</button>
       <ul>
+
         {bugs.map((bug) => (
+
           <li key={bug.id}>
             {bug.name}
             <button onClick={() => removeBug(bug.id)} style={{ marginLeft: '1rem' }}>
               Fix
             </button>
           </li>
+          
         ))}
+
       </ul>
     </div>
   );

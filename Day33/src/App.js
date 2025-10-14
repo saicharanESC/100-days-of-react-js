@@ -13,6 +13,21 @@ function App() {
 function Navbar() {
   const { state, dispatch } = useContext(GlobalContext);
 
+  const login = async () => {
+    dispatch({ type: "LOGIN_REQUEST" });
+
+    try {
+      // Fake API call (use real fetch/axios in real apps)
+      const res = await new Promise((resolve) =>
+        setTimeout(() => resolve({ name: "Sai Charan" }), 1000)
+      );
+
+      dispatch({ type: "LOGIN_SUCCESS", payload: res.name });
+    } catch (err) {
+      dispatch({ type: "LOGIN_FAILURE", payload: "Login failed!" });
+    }
+  };
+
   return (
     <nav
       style={{
@@ -23,22 +38,18 @@ function Navbar() {
     >
       <h2>🌍 My App</h2>
 
-      {state.user ? (
+      {state.loading ? (
+        <span>⏳ Logging in...</span>
+      ) : state.user ? (
         <>
           <span>Welcome, {state.user}!</span>
-          <button onClick={() => dispatch({ type: "LOGOUT" })}>
-            Logout
-          </button>
+          <button onClick={() => dispatch({ type: "LOGOUT" })}>Logout</button>
         </>
       ) : (
-        <button
-          onClick={() =>
-            dispatch({ type: "LOGIN", payload: "Sai Charan" })
-          }
-        >
-          Login
-        </button>
+        <button onClick={login}>Login</button>
       )}
+
+      {state.error && <span style={{ color: "red" }}>{state.error}</span>}
 
       <button onClick={() => dispatch({ type: "TOGGLE_THEME" })}>
         Switch to {state.theme === "light" ? "Dark" : "Light"} Mode
